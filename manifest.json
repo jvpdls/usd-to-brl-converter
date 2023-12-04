@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Conversor de USD para BRL",
+  "version": "1.0",
+  "description": "Converte valores monetários de USD para BRL",
+  "permissions": ["activeTab"],
+  "action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "icon.png"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+ }
+ 
