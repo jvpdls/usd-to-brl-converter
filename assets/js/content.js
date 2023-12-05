@@ -4,7 +4,7 @@
  */
 function _getAcceptedTags() {
   return document.querySelectorAll(
-    "a, p, span, h1, h2, h3, h4, h5, h6, strong, b, i, em, u, s, li, strike, small, big, sub, sup, mark, ins, del, q, blockquote, cite, dfn, abbr, code, pre, samp, kbd, var, figcaption, math, table, caption, colgroup, col, tbody, thead, tfoot, tr, td, th, form, fieldset, legend, label, input, button, select, datalist, optgroup, option, textarea, output, progress, meter, details, summary, menuitem, menu"
+    "div, a, p, span, h1, h2, h3, h4, h5, h6, strong, b, i, em, u, s, li, strike, small, big, sub, sup, mark, ins, del, q, blockquote, cite, dfn, abbr, code, pre, samp, kbd, var, figcaption, math, table, caption, colgroup, col, tbody, thead, tfoot, tr, td, th, form, fieldset, legend, label, input, button, select, datalist, optgroup, option, textarea, output, progress, meter, details, summary, menuitem, menu"
   );
 }
 
