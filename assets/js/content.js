@@ -155,10 +155,8 @@ chrome.runtime.onMessage.addListener(function (
 ) {
   if (request.action === "convert") {
     let valuesInUSD = findUSDvalues();
-    console.log(valuesInUSD);
     if (checkIfUSDvaluesExist(valuesInUSD)) {
       let valuesInBRL = convertUSDtoBRL(valuesInUSD);
-      console.log(valuesInBRL);
       replaceUSDvalues(valuesInUSD, valuesInBRL);
     } else {
       alert(NO_USD_VALUES_FOUND_MESSAGE);
