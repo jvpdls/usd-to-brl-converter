@@ -11,7 +11,7 @@
  * @constant {string} CONVERSION_SUCCESS_MESSAGE - The message to be displayed when the conversion is successful.
  * @constant {string} NO_USD_VALUES_FOUND_MESSAGE - The message to be displayed when no USD values are found.
  */
-// const REGEX = /(?<!R)(?:US\$|\$)(?:\s| )*\d+(?:[\.,]\d+)*/g;
+
 const REGEX = /(?<!R)(?:US\$|\$)(?:\s| )*\d+(?:[\.,]\d+)*/g;
 const USD_TO_BRL_API_URL = "https://economia.awesomeapi.com.br/last/USD-BRL";
 const CONVERSION_SUCCESS_MESSAGE =
