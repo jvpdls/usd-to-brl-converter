@@ -6,14 +6,38 @@
  */
 
 /**
- * Adds a click event listener to the 'convert' element and sends a message to the active tab to perform a conversion.
- * @param {Event} event - The click event object.
+ * Sends a message to the content script to convert USD values to BRL.
  * @returns {void}
  */
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("convertBtn").addEventListener("click", function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, { action: "convert" });
+      chrome.tabs.sendMessage(
+        tabs[0].id,
+        { action: "convert" },
+        function (response) {
+          if (typeof response.content === "string") {
+            document.getElementById("response-container").innerHTML =
+              "<p>" + response.content + "</p><hr>";
+          } else {
+            let valuesInUSD = response.content[0].valuesInUSD;
+            let valuesInBRL = response.content[1].valuesInBRL;
+            let table =
+              "<table><thead><tr><th>Valor em USD</th><th>Valor em BRL</th></tr></thead><tbody>";
+            for (let i = 0; i < valuesInUSD.length; i++) {
+              table +=
+                "<tr><td>" +
+                valuesInUSD[i] +
+                "</td><td>" +
+                valuesInBRL[i] +
+                "</td></tr>";
+            }
+            table += "</tbody></table>";
+            table += "<hr>";
+            document.getElementById("response-container").innerHTML = table;
+          }
+        }
+      );
     });
   });
 });
