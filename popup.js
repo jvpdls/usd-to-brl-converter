@@ -6,9 +6,10 @@
  */
 
 /**
- * Sends a message to the content script to convert USD values to BRL.
- * @returns {void}
- */
+  * Sends a message to the content script to convert USD values to BRL.
+  * Receives a response from the content script with the converted values.
+  * @returns {void}
+  */
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("convertBtn").addEventListener("click", function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
