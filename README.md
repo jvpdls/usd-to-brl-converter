@@ -11,7 +11,7 @@ Esta é uma extensão simples para navegador que converte USD (Dólar dos Estado
 ## Uso
 1. Encontre uma página da web que contenha valores em USD
 2. Abra o painel de extensões e selecione a extensão
-3. Clique em "Converter" e todos os valores encontrados serão convertidos instantaneamente
+3. Clique em "Converter" e todos os valores encontrados serão convertidos e exibidos numa tabela, no popup da extensão
 
 
 ## Contribuição
