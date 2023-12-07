@@ -17,7 +17,7 @@ const USD_TO_BRL_API_URL = "https://economia.awesomeapi.com.br/last/USD-BRL";
 const CONVERSION_SUCCESS_MESSAGE =
   "Número de valores em USD convertidos para BRL: ";
 const NO_USD_VALUES_FOUND_MESSAGE =
-  "Não há valores em dólar americano para serem convertidos.";
+  "❌ Não há valores em dólar americano para serem convertidos.";
 
 /**
  * Retrieves all accepted HTML tags for selection.
@@ -118,48 +118,22 @@ function convertUSDtoBRL(valuesInUSD) {
 }
 
 /**
- * Replaces USD values in the HTML elements with corresponding values in BRL.
- * @param {Array<string>} valuesInUSD - An array of values in USD to be replaced.
- * @param {Array<number>} valuesInBRL - An array of values in BRL to replace the USD values.
- * @returns {void}
- */
-function replaceUSDvalues(valuesInUSD, valuesInBRL) {
-  let elements = getAcceptedTags();
-
-  removeSpacesFromTagsWithValues(elements);
-
-  for (let i = 0; i < elements.length; i++) {
-    let value;
-    while ((value = REGEX.exec(elements[i].textContent))) {
-      elements[i].innerHTML = elements[i].innerHTML.replace(
-        value[0],
-        valuesInBRL[valuesInUSD.indexOf(value[0])]
-      );
-    }
-  }
-
-  logNumberOfValuesConverted(valuesInBRL.length);
-}
-
-/**
  * Adds a message listener to the extension to perform a conversion.
  * @param {Object} request - The message object.
  * @param {Object} sender - The sender object.
  * @param {Function} sendResponse - The sendResponse function.
  * @returns {void}
  */
-chrome.runtime.onMessage.addListener(function (
-  request,
-  _sender,
-  _sendResponse
-) {
+chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
   if (request.action === "convert") {
     let valuesInUSD = findUSDvalues();
     if (checkIfUSDvaluesExist(valuesInUSD)) {
       let valuesInBRL = convertUSDtoBRL(valuesInUSD);
-      replaceUSDvalues(valuesInUSD, valuesInBRL);
+      sendResponse({
+        content: [{ valuesInUSD: valuesInUSD }, { valuesInBRL: valuesInBRL }],
+      });
     } else {
-      alert(NO_USD_VALUES_FOUND_MESSAGE);
+      sendResponse({ content: NO_USD_VALUES_FOUND_MESSAGE });
     }
   }
 });
