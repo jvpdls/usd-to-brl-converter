@@ -1,14 +1,13 @@
 /**
- * This CSS file contains styles for the USD to BRL converter application.
+ * This CSS file contains styles for the USD to BRL conversion application.
  * It imports the "Ubuntu" font from Google Fonts and applies it to all elements.
- * The .content class defines styles for a container element with a width of 300px,
- * centered text alignment, padding, and a background color of #f5f5f5.
- * The .button class defines styles for a button element with a blue background color,
- * rounded corners, box shadow, and other visual effects.
- * The :disabled pseudo-class is used to style the button when it is disabled.
- * The :focus pseudo-class is used to style the button when it is in focus.
- * The footer > * selector targets all direct child elements of the footer and applies
- * a font size of 12px to them.
+ * The styles defined in this file include:
+ * - Styles for the main content container with class "content"
+ * - Styles for buttons with class "button", including hover and focus states
+ * - Styles for horizontal rules with the "hr" tag
+ * - Styles for tables with the "table" tag, including alternating row colors and hover effect
+ * - Styles for table cells with the "td" and "th" tags
+ * - Styles for the footer with the "footer" tag
  */
 @import "https://fonts.googleapis.com/css?family=Ubuntu:300, 400, 500, 700";
 
@@ -64,6 +63,41 @@
     rgba(50, 151, 211, 0.3) 0 0 0 4px;
 }
 
-footer > * {
+hr {
+  border: 0;
+  height: 1px;
+  background-color: #ddd;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 25px 0;
+}
+
+table td,
+table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #405cf5;
+  color: white;
+}
+
+footer {
+  padding: 10px;
   font-size: 12px;
 }
