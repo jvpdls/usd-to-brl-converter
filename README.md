@@ -1,4 +1,4 @@
-# Conversor de USD para BRL
+# Conversor de USD para BRL | Extensão para o Navegador
 
 Esta é uma extensão simples para navegador que converte USD (Dólar dos Estados Unidos) para BRL (Real Brasileiro).
 
