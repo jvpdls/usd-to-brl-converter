@@ -2,6 +2,7 @@
  * This CSS file contains styles for the USD to BRL conversion application.
  * It imports the "Ubuntu" font from Google Fonts and applies it to all elements.
  * The styles defined in this file include:
+ * - Styles for the "h1" tag
  * - Styles for the main content container with class "content"
  * - Styles for buttons with class "button", including hover and focus states
  * - Styles for horizontal rules with the "hr" tag
@@ -13,6 +14,10 @@
 
 * {
   font-family: "Ubuntu", sans-serif;
+}
+
+.title {
+  font-size: 1.5em;
 }
 
 .content {
