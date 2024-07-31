@@ -2,6 +2,10 @@
 
 This is a simple browser extension that converts USD (US Dollar) to BRL (Brazilian Real).
 
+## How it works
+
+The extension will search for values in USD on a given web page. It will analyse values preceded by $ and US$ symbols.
+
 ## Screenshots
 
 ### Before running the conversion
@@ -22,6 +26,9 @@ This is a simple browser extension that converts USD (US Dollar) to BRL (Brazili
 2. Open the extensions panel and select the extension
 3. Click on "Convert" and all the values found will be converted and displayed in a table, available in the extension's popup
 
+## Todo
+
+Implement compatibility with other formatting options for representing USD values.
 
 ## Contribution
 
