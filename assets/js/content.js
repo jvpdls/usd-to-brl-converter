@@ -1,17 +1,4 @@
-/**
- * @fileoverview This file contains the functions responsible for converting USD values to BRL.
- * @version 1.0.0
- * @since 1.0.0
- * @license MIT License. See LICENSE.md for more details.
- */
-
-/**
- * @constant {RegExp} REGEX - The regular expression to find USD values.
- * @constant {string} USD_TO_BRL_API_URL - The URL of the API to get the current exchange rate.
- * @constant {string} CONVERSION_SUCCESS_MESSAGE - The message to be displayed when the conversion is successful.
- * @constant {string} NO_USD_VALUES_FOUND_MESSAGE - The message to be displayed when no USD values are found.
- */
-
+// Constants
 const REGEX = /(?<!R)(?:US\$|\$)(?:\s| )*\d+(?:[\.,]\d+)*/g;
 const USD_TO_BRL_API_URL = "https://economia.awesomeapi.com.br/last/USD-BRL";
 const CONVERSION_SUCCESS_MESSAGE =
@@ -31,7 +18,7 @@ function getAcceptedTags() {
 
 /**
  * Checks if the given array of values in USD exists.
- * @param {Array} valuesInUSD - The array of values in USD.
+ * @param {Array<string>} valuesInUSD - The array of values in USD.
  * @returns {boolean} - Returns true if the array has values, false otherwise.
  */
 function checkIfUSDvaluesExist(valuesInUSD) {
@@ -54,19 +41,19 @@ function logNumberOfValuesConverted(numberOfValuesConverted) {
  */
 function removeSpacesFromTagsWithValues(elements) {
   elements.forEach(function (element) {
-    let html = element.innerHTML;
-    let replaced = html.replace(/&nbsp;/g, " ");
+    const html = element.innerHTML;
+    const replaced = html.replace(/&nbsp;/g, " ");
     element.innerHTML = replaced.replace(/(\$)\s+(\d+)/g, "$1$2");
   });
 }
 
 /**
  * Finds and returns an array of USD values from the HTML content.
- * @returns {string[]} An array of USD values in the format "$X.XX", "$X,XX", "US$ X.XX" or "US$X,XX".
+ * @returns {Array<string>} An array of USD values in the format "$X.XX", "$X,XX", "US$ X.XX" or "US$X,XX".
  */
 function findUSDvalues() {
-  let elements = getAcceptedTags();
-  let valuesInUSD = new Set();
+  const elements = getAcceptedTags();
+  const valuesInUSD = new Set();
 
   for (let i = 0; i < elements.length; i++) {
     let value;
@@ -84,19 +71,19 @@ function findUSDvalues() {
  * @returns {Array<string>} - The array of values converted to BRL.
  */
 function convertUSDtoBRL(valuesInUSD) {
-  let valuesInBRL = [];
-  let xhr = new XMLHttpRequest();
-  let url = "https://economia.awesomeapi.com.br/last/USD-BRL";
+  const valuesInBRL = [];
+  const xhr = new XMLHttpRequest();
+  const url = "https://economia.awesomeapi.com.br/last/USD-BRL";
 
   xhr.open("GET", url, false);
   xhr.send();
 
   if (xhr.status === 200) {
-    let response = JSON.parse(xhr.responseText);
-    let conversionRate = parseFloat(response.USDBRL.bid);
+    const response = JSON.parse(xhr.responseText);
+    const conversionRate = parseFloat(response.USDBRL.bid);
 
     for (let i = 0; i < valuesInUSD.length; i++) {
-      let valueInBRL =
+      const valueInBRL =
         parseFloat(
           valuesInUSD[i]
             .replace(/,(?=\d{2}$)/g, ".")
@@ -126,9 +113,9 @@ function convertUSDtoBRL(valuesInUSD) {
  */
 chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
   if (request.action === "convert") {
-    let valuesInUSD = findUSDvalues();
+    const valuesInUSD = findUSDvalues();
     if (checkIfUSDvaluesExist(valuesInUSD)) {
-      let valuesInBRL = convertUSDtoBRL(valuesInUSD);
+      const valuesInBRL = convertUSDtoBRL(valuesInUSD);
       sendResponse({
         content: [{ valuesInUSD: valuesInUSD }, { valuesInBRL: valuesInBRL }],
       });

@@ -1,15 +1,57 @@
 /**
- * @fileoverview This file contains the logic for the popup window.
- * @version 1.0.0
- * @since 1.0.0
- * @license MIT License. See LICENSE.md for more details.
+ * Updates the response container with the given content.
+ * @param {Array<object>|string} content - The content to be displayed.
+ * @returns {void}
  */
+function updateResponseContainer(content) {
+  const container = document.getElementById("response-container");
+  if (typeof content === "string") {
+    container.innerHTML = `<p>${content}</p><hr>`;
+  } else {
+    const tableHTML = generateTableHTML(
+      content[0].valuesInUSD,
+      content[1].valuesInBRL
+    );
+    container.innerHTML = `${tableHTML}<hr>`;
+  }
+}
 
 /**
-  * Sends a message to the content script to convert USD values to BRL.
-  * Receives a response from the content script with the converted values.
-  * @returns {void}
-  */
+ * Generates an HTML table string with values in USD and BRL.
+ *
+ * @param {Array<string>} valuesInUSD - An array of values in USD.
+ * @param {Array<string>} valuesInBRL - An array of values in BRL.
+ * @returns {string} The generated HTML table as a string.
+ */
+function generateTableHTML(valuesInUSD, valuesInBRL) {
+  let table = `
+    <table>
+      <thead>
+        <tr>
+          <th>Valor em USD</th>
+          <th>Valor em BRL</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+  for (let i = 0; i < valuesInUSD.length; i++) {
+    table += `
+      <tr>
+        <td>${valuesInUSD[i]}</td>
+        <td>${valuesInBRL[i]}</td>
+      </tr>
+    `;
+  }
+  table += `
+      </tbody>
+    </table>
+  `;
+  return table;
+}
+
+/**
+ * Listens for the convert button click event and sends a message to the content script to convert the values.
+ */
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("convertBtn").addEventListener("click", function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -17,26 +59,11 @@ document.addEventListener("DOMContentLoaded", function () {
         tabs[0].id,
         { action: "convert" },
         function (response) {
-          if (typeof response.content === "string") {
-            document.getElementById("response-container").innerHTML =
-              "<p>" + response.content + "</p><hr>";
-          } else {
-            let valuesInUSD = response.content[0].valuesInUSD;
-            let valuesInBRL = response.content[1].valuesInBRL;
-            let table =
-              "<table><thead><tr><th>Valor em USD</th><th>Valor em BRL</th></tr></thead><tbody>";
-            for (let i = 0; i < valuesInUSD.length; i++) {
-              table +=
-                "<tr><td>" +
-                valuesInUSD[i] +
-                "</td><td>" +
-                valuesInBRL[i] +
-                "</td></tr>";
-            }
-            table += "</tbody></table>";
-            table += "<hr>";
-            document.getElementById("response-container").innerHTML = table;
+          if (chrome.runtime.lastError) {
+            console.error(chrome.runtime.lastError.message);
+            return;
           }
+          updateResponseContainer(response.content);
         }
       );
     });
